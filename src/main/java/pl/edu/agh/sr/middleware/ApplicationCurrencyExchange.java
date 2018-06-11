@@ -20,7 +20,7 @@ public class ApplicationCurrencyExchange {
 
         int port = Integer.parseInt(args[0]);
 
-        System.out.println("===KONFIGURACJA KANTORU START===");
+        System.out.println("======KONFIGURACJA KANTORU START======");
         String currencyExchangeName = null;
         String rawCurrencies = null;
 
@@ -49,6 +49,6 @@ public class ApplicationCurrencyExchange {
         executorService.submit(new CurrencyPrinter(currencyExchange));
 
         System.out.println(currencyExchange);
-        System.out.println("===KONFIGURACJA KANTORU STOP===");
+        System.out.println("======KONFIGURACJA KANTORU STOP======");
     }
 }

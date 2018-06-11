@@ -18,7 +18,7 @@ public class ApplicationBank {
 
         int port = Integer.parseInt(args[0]);
 
-        System.out.println("===KONFIGURACJA BANKU START===");
+        System.out.println("======KONFIGURACJA BANKU START======");
         String name = null;
         String rawCurrencies = null;
         BigDecimal premiumLimit = null;
@@ -46,6 +46,6 @@ public class ApplicationBank {
         }
 
         System.out.println(bank);
-        System.out.println("===KONFIGURACJA BANKU STOP===");
+        System.out.println("======KONFIGURACJA BANKU STOP======");
     }
 }

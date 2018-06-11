@@ -1,6 +1,7 @@
 package pl.edu.agh.sr.middleware.bank;
 
 import com.google.common.collect.Lists;
+import pl.edu.agh.sr.middleware.proto.Currency;
 import pl.edu.agh.sr.middleware.proto.CurrencyCode;
 import pl.edu.agh.sr.middleware.proto.grpc.CurrencyServiceGrpc;
 
@@ -13,18 +14,18 @@ import java.util.stream.Stream;
 public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
 
     private final int port;
-
-    private final String name;
+    private final String bankName;
     private final BigDecimal premiumLimit;
 
-    public List<CurrencyCode> supportedCurrencies;
+    private List<CurrencyCode> supportedCurrencies;
+    private List<Currency> currencies = Lists.newCopyOnWriteArrayList();
 
-    public Bank(int port, String name, String rawCurrencies, BigDecimal premiumLimit) {
-        if (name == null || rawCurrencies == null || premiumLimit == null)
+    public Bank(int port, String bankName, String rawCurrencies, BigDecimal premiumLimit) {
+        if (bankName == null || rawCurrencies == null || premiumLimit == null)
             throw new IllegalArgumentException();
 
         this.port = port;
-        this.name = name;
+        this.bankName = bankName;
         this.premiumLimit = premiumLimit;
         this.supportedCurrencies = Lists.newArrayList();
 
@@ -39,6 +40,10 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
 
     public List<CurrencyCode> getSupportedCurrencies() {
         return supportedCurrencies;
+    }
+
+    public List<Currency> getCurrencies() {
+        return currencies;
     }
 
     private void addCurrency(String currencyCode) {
@@ -71,6 +76,6 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
     @Override
     public String toString() {
         return String.format("Bank o nazwie: %s. Wspierajacy waluty: %s. Limit dla konta premium: %s",
-                name, supportedCurrencies, premiumLimit.toPlainString());
+                bankName, supportedCurrencies, premiumLimit.toPlainString());
     }
 }
