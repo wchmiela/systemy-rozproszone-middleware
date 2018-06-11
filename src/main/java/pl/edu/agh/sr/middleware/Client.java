@@ -1,6 +1,6 @@
-package model;
+package pl.edu.agh.sr.middleware;
 
-import model.account.Account;
+import pl.edu.agh.sr.middleware.bank.Bank;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

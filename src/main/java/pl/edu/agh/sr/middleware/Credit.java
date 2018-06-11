@@ -1,7 +1,7 @@
-package model;
+package pl.edu.agh.sr.middleware;
 
-import model.currencies.Currency;
-import model.currencies.CurrencyCode;
+import pl.edu.agh.sr.middleware.proto.Currency;
+import pl.edu.agh.sr.middleware.proto.CurrencyCode;
 
 import java.math.BigDecimal;
 
@@ -20,8 +20,8 @@ public class Credit {
     }
 
     public BigDecimal getCredit(Currency currency) {
-        if (currencyCode == currency.getSecond()) {
-            return credit.multiply(currency.getValue());
+        if (currencyCode == currency.getCode2()) {
+            return credit.multiply(BigDecimal.valueOf(currency.getValue()));
         }
         return getCredit();
     }

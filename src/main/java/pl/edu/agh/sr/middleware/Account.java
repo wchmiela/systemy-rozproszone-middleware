@@ -1,6 +1,4 @@
-package model.account;
-
-import model.Credit;
+package pl.edu.agh.sr.middleware;
 
 public class Account {
 

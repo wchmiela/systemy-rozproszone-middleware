@@ -1,4 +1,4 @@
-package model;
+package pl.edu.agh.sr.middleware;
 
 public class Pesel {
     private byte PESEL[];

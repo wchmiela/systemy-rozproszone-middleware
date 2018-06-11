@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "pl.edu.agh.sr.middleware.pl.edu.agh.sr.middleware.proto";
+option java_outer_classname = "CurrencyServiceProto";
+
+enum CurrencyCode {
+    USD = 0;
+    EUR = 1;
+    CHF = 2;
+    GBP = 3;
+    PLN = 4;
+    SEK = 5;
+    RUB = 6;
+}
+
+message Currency {
+    CurrencyCode code1 = 1;
+    CurrencyCode code2 = 2;
+    double value = 3;
+}
+
+message CurrencyRequest {
+    CurrencyCode code1 = 1;
+    CurrencyCode code2 = 2;
+}
+
+service CurrencyService {
+    rpc CurrencyChat (CurrencyRequest) returns (stream Currency) {}
+}

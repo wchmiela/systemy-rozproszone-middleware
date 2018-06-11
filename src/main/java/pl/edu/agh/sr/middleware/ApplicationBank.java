@@ -1,4 +1,6 @@
-import model.Bank;
+package pl.edu.agh.sr.middleware;
+
+import pl.edu.agh.sr.middleware.bank.Bank;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,9 +8,16 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class BankApplication {
+public class ApplicationBank {
 
     public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Podaj numer portu.");
+            return;
+        }
+
+        int port = Integer.parseInt(args[0]);
+
         System.out.println("===KONFIGURACJA BANKU START===");
         String name = null;
         String rawCurrencies = null;
@@ -30,9 +39,9 @@ public class BankApplication {
 
         Bank bank = null;
         try {
-            bank = new Bank(name, rawCurrencies, premiumLimit);
+            bank = new Bank(port, name, rawCurrencies, premiumLimit);
         } catch (Exception e) {
-            System.out.println("Wystapil blad w konfigracji Banku.");
+            System.out.println("Wystapil blad w konfigracji Banku. " + e.getMessage());
             System.exit(1);
         }
 
