@@ -13,12 +13,13 @@ import java.util.concurrent.Executors;
 public class ApplicationCurrencyExchange {
 
     public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("Podaj numer portu.");
+        if (args.length != 2) {
+            System.out.println("Podaj poprawne numery portow. [PORT KANTORU] [PORT BANKU]");
             return;
         }
 
-        int port = Integer.parseInt(args[0]);
+        int exchangeCurrencyPort = Integer.parseInt(args[0]);
+        int bankPort = Integer.parseInt(args[1]);
 
         System.out.println("======KONFIGURACJA KANTORU START======");
         String currencyExchangeName = null;
@@ -38,7 +39,7 @@ public class ApplicationCurrencyExchange {
 
         CurrencyExchange currencyExchange = null;
         try {
-            currencyExchange = new CurrencyExchange(port, currencyExchangeName, rawCurrencies);
+            currencyExchange = new CurrencyExchange(exchangeCurrencyPort, bankPort, currencyExchangeName, rawCurrencies);
         } catch (IOException e) {
             System.out.println("Wystapil blad w konfigracji Kantoru. " + e.getMessage());
             System.exit(1);

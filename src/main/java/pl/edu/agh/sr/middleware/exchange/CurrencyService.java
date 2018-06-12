@@ -21,8 +21,6 @@ public class CurrencyService extends CurrencyServiceGrpc.CurrencyServiceImplBase
 
     @Override
     public void currencyChat(CurrencyRequest request, StreamObserver<Currency> responseObserver) {
-        System.out.println("Strumieniowanie start");
-
         CurrencyCode first = request.getCode1();
         CurrencyCode second = request.getCode2();
 
@@ -35,7 +33,6 @@ public class CurrencyService extends CurrencyServiceGrpc.CurrencyServiceImplBase
             e.printStackTrace();
         }
 
-        System.out.println("Strumieniowanie stop");
         responseObserver.onCompleted();
     }
 

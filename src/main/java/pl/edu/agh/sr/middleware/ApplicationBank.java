@@ -11,12 +11,13 @@ import java.math.RoundingMode;
 public class ApplicationBank {
 
     public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("Podaj numer portu.");
+        if (args.length != 2) {
+            System.out.println("Podaj poprawne numery portow. [PORT BANKU] [PORT KANTORU]");
             return;
         }
 
-        int port = Integer.parseInt(args[0]);
+        int bankPort = Integer.parseInt(args[0]);
+        int currencyExchangePort = Integer.parseInt(args[1]);
 
         System.out.println("======KONFIGURACJA BANKU START======");
         String name = null;
@@ -39,7 +40,7 @@ public class ApplicationBank {
 
         Bank bank = null;
         try {
-            bank = new Bank(port, name, rawCurrencies, premiumLimit);
+            bank = new Bank(bankPort, currencyExchangePort, name, rawCurrencies, premiumLimit);
         } catch (Exception e) {
             System.out.println("Wystapil blad w konfigracji Banku. " + e.getMessage());
             System.exit(1);

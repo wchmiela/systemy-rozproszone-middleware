@@ -14,14 +14,15 @@ import java.util.stream.Stream;
 
 public class CurrencyExchange {
 
-    private final int port;
+    private final int exchangeCurrencyPort;
+    private final int bankPort;
     private final Server server;
     private final ImmutableList<Currency> baseCurrencies;
     private final String currencyExchangeName;
     private List<CurrencyCode> supportedCurrencies = Lists.newCopyOnWriteArrayList();
     private List<Currency> currencies = Lists.newCopyOnWriteArrayList();
 
-    public CurrencyExchange(int port, String currencyExchangeName, String rawCurrencies) throws IOException {
+    public CurrencyExchange(int exchangeCurrencyPort, int bankPort, String currencyExchangeName, String rawCurrencies) throws IOException {
         this.currencyExchangeName = currencyExchangeName;
         this.baseCurrencies = ImmutableList.<Currency>builder()
                 .add(Currency.newBuilder().setCode1(CurrencyCode.PLN).setCode2(CurrencyCode.USD).setValue(3.62).build())
@@ -41,8 +42,9 @@ public class CurrencyExchange {
             }
         }
 
-        this.port = port;
-        this.server = ServerBuilder.forPort(port).addService(new CurrencyService(currencies)).build().start();
+        this.exchangeCurrencyPort = exchangeCurrencyPort;
+        this.bankPort = bankPort;
+        this.server = ServerBuilder.forPort(exchangeCurrencyPort).addService(new CurrencyService(currencies)).build().start();
     }
 
     public Currency getRandomCurrency() {
