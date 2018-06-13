@@ -49,12 +49,17 @@ struct TClient  {
     2: required string lastName,
     3: required string pesel,
     4: required string income
-    5: i32 port;
+    5: required i32 port
 }
 
 struct TBank  {
     1: required string bankName,
     2: required TAccountType type
+}
+
+struct TCheckMessage{
+    1: required TBank tBank,
+    2: required string balance
 }
 
 
@@ -64,13 +69,14 @@ struct TBank  {
 //}
 
 service TCreateAccount {
-    void addAccount(1:TClient tClient)
-    void confirm(1:TBank tBank)
+    void addAccount(1:TClient tClient),
+    void confirm(1:TBank tBank),
+    void decline(1:TBank tBank)
 }
 
 service TStandardAccount{
-
-
+    void requestCheck(1:TClient tClient),
+    void replyCheck(1:TCheckMessage tCheckMessage)
 }
 
 service TPremiumAccount{

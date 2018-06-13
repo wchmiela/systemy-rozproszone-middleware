@@ -110,7 +110,7 @@ public class TClient implements org.apache.thrift.TBase<TClient, TClient._Fields
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.INCOME, new org.apache.thrift.meta_data.FieldMetaData("income", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.PORT, new org.apache.thrift.meta_data.FieldMetaData("port", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.PORT, new org.apache.thrift.meta_data.FieldMetaData("port", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(TClient.class, metaDataMap);
@@ -594,6 +594,7 @@ public class TClient implements org.apache.thrift.TBase<TClient, TClient._Fields
     if (income == null) {
       throw new org.apache.thrift.protocol.TProtocolException("Required field 'income' was not present! Struct: " + toString());
     }
+    // alas, we cannot check 'port' because it's a primitive and you chose the non-beans generator.
     // check for sub-struct validity
   }
 
@@ -681,6 +682,9 @@ public class TClient implements org.apache.thrift.TBase<TClient, TClient._Fields
       iprot.readStructEnd();
 
       // check for required fields of primitive type, which can't be checked in the validate method
+      if (!struct.isSetPort()) {
+        throw new org.apache.thrift.protocol.TProtocolException("Required field 'port' was not found in serialized data! Struct: " + toString());
+      }
       struct.validate();
     }
 
@@ -732,14 +736,7 @@ public class TClient implements org.apache.thrift.TBase<TClient, TClient._Fields
       oprot.writeString(struct.lastName);
       oprot.writeString(struct.pesel);
       oprot.writeString(struct.income);
-      java.util.BitSet optionals = new java.util.BitSet();
-      if (struct.isSetPort()) {
-        optionals.set(0);
-      }
-      oprot.writeBitSet(optionals, 1);
-      if (struct.isSetPort()) {
-        oprot.writeI32(struct.port);
-      }
+      oprot.writeI32(struct.port);
     }
 
     @Override
@@ -753,11 +750,8 @@ public class TClient implements org.apache.thrift.TBase<TClient, TClient._Fields
       struct.setPeselIsSet(true);
       struct.income = iprot.readString();
       struct.setIncomeIsSet(true);
-      java.util.BitSet incoming = iprot.readBitSet(1);
-      if (incoming.get(0)) {
-        struct.port = iprot.readI32();
-        struct.setPortIsSet(true);
-      }
+      struct.port = iprot.readI32();
+      struct.setPortIsSet(true);
     }
   }
 

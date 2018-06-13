@@ -46,15 +46,51 @@ public class ApplicationClient {
             System.exit(1);
         }
 
-        Client client = null;
+        Client client;
         try {
             client = new Client(clientPort, bankPort, firstName, lastName, pesel, income);
+            System.out.println(client);
+            System.out.println("===KONFIGURACJA KLIENTA STOP===");
+
+            menu(client);
         } catch (Exception e) {
             System.out.println("Wystapil blad w konfigracji klienta.");
             System.exit(1);
         }
+    }
 
-        System.out.println(client);
-        System.out.println("===KONFIGURACJA KLIENTA STOP===");
+    private static void menu(Client client) throws IOException {
+        System.out.println("================MENU================");
+        System.out.println("register               [zaloz konto]");
+        System.out.println("check      [sprawdz dostepne srodki]");
+        System.out.println("credit        [wez kredyt w walucie]");
+        System.out.println("exit                       [zamknij]");
+        System.out.println("====================================");
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        while (true) {
+            System.out.print("Wczytaj operacje: ");
+            String operation = bufferedReader.readLine();
+
+            switch (operation.toLowerCase()) {
+                case "register":
+                    client.register();
+                    break;
+                case "check":
+                    client.check();
+                    break;
+                case "credit":
+                    break;
+                case "exit":
+//                    client.close(); todo implement
+                    System.out.println("Zamkniecie aplikacji klienta");
+                    return;
+                default:
+                    System.out.println("Wczytano niepoprawna opcje");
+                    menu(client);
+                    break;
+            }
+        }
     }
 }

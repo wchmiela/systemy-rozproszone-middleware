@@ -1,6 +1,7 @@
 package pl.edu.agh.sr.middleware.bank;
 
 import com.google.common.collect.Lists;
+import org.apache.thrift.TMultiplexedProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocolFactory;
 import org.apache.thrift.server.TServer;
@@ -12,6 +13,7 @@ import pl.edu.agh.sr.middleware.proto.Currency;
 import pl.edu.agh.sr.middleware.proto.CurrencyCode;
 import pl.edu.agh.sr.middleware.proto.grpc.CurrencyServiceGrpc;
 import pl.edu.agh.sr.middleware.thrift.TCreateAccount;
+import pl.edu.agh.sr.middleware.thrift.TStandardAccount;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,7 +27,7 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
     private static BigDecimal premiumLimit;
     private static int bankPort;
     private static List<ClientTuple> clients = Lists.newArrayList();
-//    private static List<Integer> clientsPorts;
+    //    private static List<Integer> clientsPorts;
     private static String bankName;
     private final int exchangeCurrencyPort;
     private List<CurrencyCode> supportedCurrencies;
@@ -52,13 +54,18 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
     }
 
     public static void handleClient() {
-        TCreateAccount.Processor<ClientHandler> processor = new TCreateAccount.Processor<>(new ClientHandler(clients, bankName, premiumLimit));
+        TCreateAccount.Processor<ClientHandler> processor1 = new TCreateAccount.Processor<>(new ClientHandler(clients, bankName, premiumLimit));
+        TStandardAccount.Processor<ClientHandler> processor2 = new TStandardAccount.Processor<>(new ClientHandler(clients, bankName, premiumLimit));
 
         try {
             TServerTransport serverTransport = new TServerSocket(8001);
             TProtocolFactory protocolFactory = new TBinaryProtocol.Factory();
 
-            TServer server = new TSimpleServer(new TServer.Args(serverTransport).protocolFactory(protocolFactory).processor(processor));
+            TMultiplexedProcessor multiplex = new TMultiplexedProcessor();
+            multiplex.registerProcessor("S1", processor1);
+            multiplex.registerProcessor("S2", processor2);
+
+            TServer server = new TSimpleServer(new TServer.Args(serverTransport).protocolFactory(protocolFactory).processor(multiplex));
             server.serve();
         } catch (TTransportException e) {
             e.printStackTrace();
