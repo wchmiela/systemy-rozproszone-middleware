@@ -10,9 +10,7 @@ import org.apache.thrift.protocol.TProtocolFactory;
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TSimpleServer;
 import org.apache.thrift.transport.*;
-import pl.edu.agh.sr.middleware.thrift.TClient;
-import pl.edu.agh.sr.middleware.thrift.TCreateAccount;
-import pl.edu.agh.sr.middleware.thrift.TStandardAccount;
+import pl.edu.agh.sr.middleware.thrift.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,6 +27,7 @@ public class Client {
     private final String lastName;
     private final Pesel PESEL;
     private final BigDecimal income;
+    private boolean first = true;
 
     public Client(int clientPort, int inputBankPort, String firstName, String lastName, String pesel, BigDecimal income) {
         if (firstName == null || lastName == null || pesel == null || income == null)
@@ -67,6 +66,7 @@ public class Client {
     public static void handleBank() {
         TCreateAccount.Processor<BankHandler> processor1 = new TCreateAccount.Processor<>(new BankHandler(accounts));
         TStandardAccount.Processor<BankHandler> processor2 = new TStandardAccount.Processor<>(new BankHandler(accounts));
+        TPremiumAccount.Processor<BankHandler> processor3 = new TPremiumAccount.Processor<>(new BankHandler(accounts));
 
         try {
             TServerTransport serverTransport = new TServerSocket(9001);
@@ -75,6 +75,7 @@ public class Client {
             TMultiplexedProcessor multiplex = new TMultiplexedProcessor();
             multiplex.registerProcessor("S1", processor1);
             multiplex.registerProcessor("S2", processor2);
+            multiplex.registerProcessor("S3", processor3);
 
             TServer server = new TSimpleServer(new TServer.Args(serverTransport).protocolFactory(protocolFactory).processor(multiplex));
             server.serve();
@@ -99,11 +100,19 @@ public class Client {
         }
     }
 
+    public void credit(String currency, String money, String days) {
+        try {
+            clientAction("credit", currency, money, days);
+        } catch (TException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Pesel getPESEL() {
         return PESEL;
     }
 
-    private void clientAction(String operation) throws TException {
+    private void clientAction(String... operations) throws TException {
         TSocket socket = new TSocket("localhost", bankPort);
         TProtocol protocol = new TBinaryProtocol(socket, true, true);
 
@@ -117,10 +126,11 @@ public class Client {
 
         TCreateAccount.Client account = new TCreateAccount.Client(new TMultiplexedProtocol(protocol, "S1"));
         TStandardAccount.Client check = new TStandardAccount.Client(new TMultiplexedProtocol(protocol, "S2"));
+        TPremiumAccount.Client credit = new TPremiumAccount.Client(new TMultiplexedProtocol(protocol, "S3"));
 
         TClient tClient = new TClient(firstName, lastName, PESEL.toString(), income.toPlainString(), clientPort);
 
-        switch (operation.toLowerCase()) {
+        switch (operations[0].toLowerCase()) {
             case "register":
                 account.addAccount(tClient);
                 break;
@@ -128,11 +138,19 @@ public class Client {
                 check.requestCheck(tClient);
                 break;
             case "credit":
+                if (first) {
+                    credit.checkCurrencies(tClient);
+                    first = false;
+                    break;
+                } else {
+                    TCreditRequest tCreditRequest = new TCreditRequest(tClient, operations[1],
+                            Integer.parseInt(operations[2]), Integer.parseInt(operations[3]));
+                    credit.requestCredit(tCreditRequest);
+                }
                 break;
             default:
                 break;
         }
-
 
         socket.close();
     }

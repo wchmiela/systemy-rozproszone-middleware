@@ -13,6 +13,7 @@ import pl.edu.agh.sr.middleware.proto.Currency;
 import pl.edu.agh.sr.middleware.proto.CurrencyCode;
 import pl.edu.agh.sr.middleware.proto.grpc.CurrencyServiceGrpc;
 import pl.edu.agh.sr.middleware.thrift.TCreateAccount;
+import pl.edu.agh.sr.middleware.thrift.TPremiumAccount;
 import pl.edu.agh.sr.middleware.thrift.TStandardAccount;
 
 import java.math.BigDecimal;
@@ -27,11 +28,10 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
     private static BigDecimal premiumLimit;
     private static int bankPort;
     private static List<ClientTuple> clients = Lists.newArrayList();
-    //    private static List<Integer> clientsPorts;
     private static String bankName;
+    private static List<Currency> currencies = Lists.newCopyOnWriteArrayList();
     private final int exchangeCurrencyPort;
     private List<CurrencyCode> supportedCurrencies;
-    private List<Currency> currencies = Lists.newCopyOnWriteArrayList();
 
     public Bank(int inputBankPort, int exchangeCurrencyPort, String inputBankName, String rawCurrencies, BigDecimal inputPremiumLimit) {
         if (inputBankName == null || rawCurrencies == null || inputPremiumLimit == null)
@@ -54,8 +54,9 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
     }
 
     public static void handleClient() {
-        TCreateAccount.Processor<ClientHandler> processor1 = new TCreateAccount.Processor<>(new ClientHandler(clients, bankName, premiumLimit));
-        TStandardAccount.Processor<ClientHandler> processor2 = new TStandardAccount.Processor<>(new ClientHandler(clients, bankName, premiumLimit));
+        TCreateAccount.Processor<ClientHandler> processor1 = new TCreateAccount.Processor<>(new ClientHandler(clients, currencies, bankName, premiumLimit));
+        TStandardAccount.Processor<ClientHandler> processor2 = new TStandardAccount.Processor<>(new ClientHandler(clients, currencies, bankName, premiumLimit));
+        TPremiumAccount.Processor<ClientHandler> processor3 = new TPremiumAccount.Processor<>(new ClientHandler(clients, currencies, bankName, premiumLimit));
 
         try {
             TServerTransport serverTransport = new TServerSocket(8001);
@@ -64,6 +65,7 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
             TMultiplexedProcessor multiplex = new TMultiplexedProcessor();
             multiplex.registerProcessor("S1", processor1);
             multiplex.registerProcessor("S2", processor2);
+            multiplex.registerProcessor("S3", processor3);
 
             TServer server = new TSimpleServer(new TServer.Args(serverTransport).protocolFactory(protocolFactory).processor(multiplex));
             server.serve();

@@ -12,9 +12,25 @@ public class TPremiumAccount {
 
   public interface Iface {
 
+    public void checkCurrencies(TClient tClient) throws org.apache.thrift.TException;
+
+    public void tellCurrencies(TBank tBank, java.util.List<TCurrencyCode> tCodes) throws org.apache.thrift.TException;
+
+    public void requestCredit(TCreditRequest tCreditRequest) throws org.apache.thrift.TException;
+
+    public void replyCredit(TCredit tCredit) throws org.apache.thrift.TException;
+
   }
 
   public interface AsyncIface {
+
+    public void checkCurrencies(TClient tClient, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
+
+    public void tellCurrencies(TBank tBank, java.util.List<TCurrencyCode> tCodes, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
+
+    public void requestCredit(TCreditRequest tCreditRequest, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
+
+    public void replyCredit(TCredit tCredit, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -38,6 +54,87 @@ public class TPremiumAccount {
       super(iprot, oprot);
     }
 
+    public void checkCurrencies(TClient tClient) throws org.apache.thrift.TException
+    {
+      send_checkCurrencies(tClient);
+      recv_checkCurrencies();
+    }
+
+    public void send_checkCurrencies(TClient tClient) throws org.apache.thrift.TException
+    {
+      checkCurrencies_args args = new checkCurrencies_args();
+      args.setTClient(tClient);
+      sendBase("checkCurrencies", args);
+    }
+
+    public void recv_checkCurrencies() throws org.apache.thrift.TException
+    {
+      checkCurrencies_result result = new checkCurrencies_result();
+      receiveBase(result, "checkCurrencies");
+      return;
+    }
+
+    public void tellCurrencies(TBank tBank, java.util.List<TCurrencyCode> tCodes) throws org.apache.thrift.TException
+    {
+      send_tellCurrencies(tBank, tCodes);
+      recv_tellCurrencies();
+    }
+
+    public void send_tellCurrencies(TBank tBank, java.util.List<TCurrencyCode> tCodes) throws org.apache.thrift.TException
+    {
+      tellCurrencies_args args = new tellCurrencies_args();
+      args.setTBank(tBank);
+      args.setTCodes(tCodes);
+      sendBase("tellCurrencies", args);
+    }
+
+    public void recv_tellCurrencies() throws org.apache.thrift.TException
+    {
+      tellCurrencies_result result = new tellCurrencies_result();
+      receiveBase(result, "tellCurrencies");
+      return;
+    }
+
+    public void requestCredit(TCreditRequest tCreditRequest) throws org.apache.thrift.TException
+    {
+      send_requestCredit(tCreditRequest);
+      recv_requestCredit();
+    }
+
+    public void send_requestCredit(TCreditRequest tCreditRequest) throws org.apache.thrift.TException
+    {
+      requestCredit_args args = new requestCredit_args();
+      args.setTCreditRequest(tCreditRequest);
+      sendBase("requestCredit", args);
+    }
+
+    public void recv_requestCredit() throws org.apache.thrift.TException
+    {
+      requestCredit_result result = new requestCredit_result();
+      receiveBase(result, "requestCredit");
+      return;
+    }
+
+    public void replyCredit(TCredit tCredit) throws org.apache.thrift.TException
+    {
+      send_replyCredit(tCredit);
+      recv_replyCredit();
+    }
+
+    public void send_replyCredit(TCredit tCredit) throws org.apache.thrift.TException
+    {
+      replyCredit_args args = new replyCredit_args();
+      args.setTCredit(tCredit);
+      sendBase("replyCredit", args);
+    }
+
+    public void recv_replyCredit() throws org.apache.thrift.TException
+    {
+      replyCredit_result result = new replyCredit_result();
+      receiveBase(result, "replyCredit");
+      return;
+    }
+
   }
   public static class AsyncClient extends org.apache.thrift.async.TAsyncClient implements AsyncIface {
     public static class Factory implements org.apache.thrift.async.TAsyncClientFactory<AsyncClient> {
@@ -56,6 +153,137 @@ public class TPremiumAccount {
       super(protocolFactory, clientManager, transport);
     }
 
+    public void checkCurrencies(TClient tClient, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      checkCurrencies_call method_call = new checkCurrencies_call(tClient, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class checkCurrencies_call extends org.apache.thrift.async.TAsyncMethodCall<Void> {
+      private TClient tClient;
+      public checkCurrencies_call(TClient tClient, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.tClient = tClient;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("checkCurrencies", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        checkCurrencies_args args = new checkCurrencies_args();
+        args.setTClient(tClient);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return null;
+      }
+    }
+
+    public void tellCurrencies(TBank tBank, java.util.List<TCurrencyCode> tCodes, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      tellCurrencies_call method_call = new tellCurrencies_call(tBank, tCodes, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class tellCurrencies_call extends org.apache.thrift.async.TAsyncMethodCall<Void> {
+      private TBank tBank;
+      private java.util.List<TCurrencyCode> tCodes;
+      public tellCurrencies_call(TBank tBank, java.util.List<TCurrencyCode> tCodes, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.tBank = tBank;
+        this.tCodes = tCodes;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("tellCurrencies", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        tellCurrencies_args args = new tellCurrencies_args();
+        args.setTBank(tBank);
+        args.setTCodes(tCodes);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return null;
+      }
+    }
+
+    public void requestCredit(TCreditRequest tCreditRequest, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      requestCredit_call method_call = new requestCredit_call(tCreditRequest, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class requestCredit_call extends org.apache.thrift.async.TAsyncMethodCall<Void> {
+      private TCreditRequest tCreditRequest;
+      public requestCredit_call(TCreditRequest tCreditRequest, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.tCreditRequest = tCreditRequest;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("requestCredit", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        requestCredit_args args = new requestCredit_args();
+        args.setTCreditRequest(tCreditRequest);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return null;
+      }
+    }
+
+    public void replyCredit(TCredit tCredit, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      replyCredit_call method_call = new replyCredit_call(tCredit, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class replyCredit_call extends org.apache.thrift.async.TAsyncMethodCall<Void> {
+      private TCredit tCredit;
+      public replyCredit_call(TCredit tCredit, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.tCredit = tCredit;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("replyCredit", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        replyCredit_args args = new replyCredit_args();
+        args.setTCredit(tCredit);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return null;
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
@@ -69,7 +297,111 @@ public class TPremiumAccount {
     }
 
     private static <I extends Iface> java.util.Map<java.lang.String,  org.apache.thrift.ProcessFunction<I, ? extends org.apache.thrift.TBase>> getProcessMap(java.util.Map<java.lang.String, org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
+      processMap.put("checkCurrencies", new checkCurrencies());
+      processMap.put("tellCurrencies", new tellCurrencies());
+      processMap.put("requestCredit", new requestCredit());
+      processMap.put("replyCredit", new replyCredit());
       return processMap;
+    }
+
+    public static class checkCurrencies<I extends Iface> extends org.apache.thrift.ProcessFunction<I, checkCurrencies_args> {
+      public checkCurrencies() {
+        super("checkCurrencies");
+      }
+
+      public checkCurrencies_args getEmptyArgsInstance() {
+        return new checkCurrencies_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean handleRuntimeExceptions() {
+        return false;
+      }
+
+      public checkCurrencies_result getResult(I iface, checkCurrencies_args args) throws org.apache.thrift.TException {
+        checkCurrencies_result result = new checkCurrencies_result();
+        iface.checkCurrencies(args.tClient);
+        return result;
+      }
+    }
+
+    public static class tellCurrencies<I extends Iface> extends org.apache.thrift.ProcessFunction<I, tellCurrencies_args> {
+      public tellCurrencies() {
+        super("tellCurrencies");
+      }
+
+      public tellCurrencies_args getEmptyArgsInstance() {
+        return new tellCurrencies_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean handleRuntimeExceptions() {
+        return false;
+      }
+
+      public tellCurrencies_result getResult(I iface, tellCurrencies_args args) throws org.apache.thrift.TException {
+        tellCurrencies_result result = new tellCurrencies_result();
+        iface.tellCurrencies(args.tBank, args.tCodes);
+        return result;
+      }
+    }
+
+    public static class requestCredit<I extends Iface> extends org.apache.thrift.ProcessFunction<I, requestCredit_args> {
+      public requestCredit() {
+        super("requestCredit");
+      }
+
+      public requestCredit_args getEmptyArgsInstance() {
+        return new requestCredit_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean handleRuntimeExceptions() {
+        return false;
+      }
+
+      public requestCredit_result getResult(I iface, requestCredit_args args) throws org.apache.thrift.TException {
+        requestCredit_result result = new requestCredit_result();
+        iface.requestCredit(args.tCreditRequest);
+        return result;
+      }
+    }
+
+    public static class replyCredit<I extends Iface> extends org.apache.thrift.ProcessFunction<I, replyCredit_args> {
+      public replyCredit() {
+        super("replyCredit");
+      }
+
+      public replyCredit_args getEmptyArgsInstance() {
+        return new replyCredit_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean handleRuntimeExceptions() {
+        return false;
+      }
+
+      public replyCredit_result getResult(I iface, replyCredit_args args) throws org.apache.thrift.TException {
+        replyCredit_result result = new replyCredit_result();
+        iface.replyCredit(args.tCredit);
+        return result;
+      }
     }
 
   }
@@ -85,9 +417,2883 @@ public class TPremiumAccount {
     }
 
     private static <I extends AsyncIface> java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
+      processMap.put("checkCurrencies", new checkCurrencies());
+      processMap.put("tellCurrencies", new tellCurrencies());
+      processMap.put("requestCredit", new requestCredit());
+      processMap.put("replyCredit", new replyCredit());
       return processMap;
     }
 
+    public static class checkCurrencies<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, checkCurrencies_args, Void> {
+      public checkCurrencies() {
+        super("checkCurrencies");
+      }
+
+      public checkCurrencies_args getEmptyArgsInstance() {
+        return new checkCurrencies_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<Void> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            checkCurrencies_result result = new checkCurrencies_result();
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            checkCurrencies_result result = new checkCurrencies_result();
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, checkCurrencies_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+        iface.checkCurrencies(args.tClient,resultHandler);
+      }
+    }
+
+    public static class tellCurrencies<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, tellCurrencies_args, Void> {
+      public tellCurrencies() {
+        super("tellCurrencies");
+      }
+
+      public tellCurrencies_args getEmptyArgsInstance() {
+        return new tellCurrencies_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<Void> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            tellCurrencies_result result = new tellCurrencies_result();
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            tellCurrencies_result result = new tellCurrencies_result();
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, tellCurrencies_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+        iface.tellCurrencies(args.tBank, args.tCodes,resultHandler);
+      }
+    }
+
+    public static class requestCredit<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, requestCredit_args, Void> {
+      public requestCredit() {
+        super("requestCredit");
+      }
+
+      public requestCredit_args getEmptyArgsInstance() {
+        return new requestCredit_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<Void> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            requestCredit_result result = new requestCredit_result();
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            requestCredit_result result = new requestCredit_result();
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, requestCredit_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+        iface.requestCredit(args.tCreditRequest,resultHandler);
+      }
+    }
+
+    public static class replyCredit<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, replyCredit_args, Void> {
+      public replyCredit() {
+        super("replyCredit");
+      }
+
+      public replyCredit_args getEmptyArgsInstance() {
+        return new replyCredit_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<Void> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            replyCredit_result result = new replyCredit_result();
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            replyCredit_result result = new replyCredit_result();
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, replyCredit_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+        iface.replyCredit(args.tCredit,resultHandler);
+      }
+    }
+
+  }
+
+  public static class checkCurrencies_args implements org.apache.thrift.TBase<checkCurrencies_args, checkCurrencies_args._Fields>, java.io.Serializable, Cloneable, Comparable<checkCurrencies_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("checkCurrencies_args");
+
+    private static final org.apache.thrift.protocol.TField T_CLIENT_FIELD_DESC = new org.apache.thrift.protocol.TField("tClient", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new checkCurrencies_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new checkCurrencies_argsTupleSchemeFactory();
+
+    public TClient tClient; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      T_CLIENT((short)1, "tClient");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // T_CLIENT
+            return T_CLIENT;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.T_CLIENT, new org.apache.thrift.meta_data.FieldMetaData("tClient", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TClient.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(checkCurrencies_args.class, metaDataMap);
+    }
+
+    public checkCurrencies_args() {
+    }
+
+    public checkCurrencies_args(
+      TClient tClient)
+    {
+      this();
+      this.tClient = tClient;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public checkCurrencies_args(checkCurrencies_args other) {
+      if (other.isSetTClient()) {
+        this.tClient = new TClient(other.tClient);
+      }
+    }
+
+    public checkCurrencies_args deepCopy() {
+      return new checkCurrencies_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.tClient = null;
+    }
+
+    public TClient getTClient() {
+      return this.tClient;
+    }
+
+    public checkCurrencies_args setTClient(TClient tClient) {
+      this.tClient = tClient;
+      return this;
+    }
+
+    public void unsetTClient() {
+      this.tClient = null;
+    }
+
+    /** Returns true if field tClient is set (has been assigned a value) and false otherwise */
+    public boolean isSetTClient() {
+      return this.tClient != null;
+    }
+
+    public void setTClientIsSet(boolean value) {
+      if (!value) {
+        this.tClient = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, java.lang.Object value) {
+      switch (field) {
+      case T_CLIENT:
+        if (value == null) {
+          unsetTClient();
+        } else {
+          setTClient((TClient)value);
+        }
+        break;
+
+      }
+    }
+
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case T_CLIENT:
+        return getTClient();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case T_CLIENT:
+        return isSetTClient();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof checkCurrencies_args)
+        return this.equals((checkCurrencies_args)that);
+      return false;
+    }
+
+    public boolean equals(checkCurrencies_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_tClient = true && this.isSetTClient();
+      boolean that_present_tClient = true && that.isSetTClient();
+      if (this_present_tClient || that_present_tClient) {
+        if (!(this_present_tClient && that_present_tClient))
+          return false;
+        if (!this.tClient.equals(that.tClient))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetTClient()) ? 131071 : 524287);
+      if (isSetTClient())
+        hashCode = hashCode * 8191 + tClient.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(checkCurrencies_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetTClient()).compareTo(other.isSetTClient());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTClient()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tClient, other.tClient);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("checkCurrencies_args(");
+      boolean first = true;
+
+      sb.append("tClient:");
+      if (this.tClient == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.tClient);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (tClient != null) {
+        tClient.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class checkCurrencies_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public checkCurrencies_argsStandardScheme getScheme() {
+        return new checkCurrencies_argsStandardScheme();
+      }
+    }
+
+    private static class checkCurrencies_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<checkCurrencies_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, checkCurrencies_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // T_CLIENT
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.tClient = new TClient();
+                struct.tClient.read(iprot);
+                struct.setTClientIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, checkCurrencies_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.tClient != null) {
+          oprot.writeFieldBegin(T_CLIENT_FIELD_DESC);
+          struct.tClient.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class checkCurrencies_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public checkCurrencies_argsTupleScheme getScheme() {
+        return new checkCurrencies_argsTupleScheme();
+      }
+    }
+
+    private static class checkCurrencies_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<checkCurrencies_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, checkCurrencies_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetTClient()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetTClient()) {
+          struct.tClient.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, checkCurrencies_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.tClient = new TClient();
+          struct.tClient.read(iprot);
+          struct.setTClientIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class checkCurrencies_result implements org.apache.thrift.TBase<checkCurrencies_result, checkCurrencies_result._Fields>, java.io.Serializable, Cloneable, Comparable<checkCurrencies_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("checkCurrencies_result");
+
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new checkCurrencies_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new checkCurrencies_resultTupleSchemeFactory();
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(checkCurrencies_result.class, metaDataMap);
+    }
+
+    public checkCurrencies_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public checkCurrencies_result(checkCurrencies_result other) {
+    }
+
+    public checkCurrencies_result deepCopy() {
+      return new checkCurrencies_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, java.lang.Object value) {
+      switch (field) {
+      }
+    }
+
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof checkCurrencies_result)
+        return this.equals((checkCurrencies_result)that);
+      return false;
+    }
+
+    public boolean equals(checkCurrencies_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(checkCurrencies_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("checkCurrencies_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class checkCurrencies_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public checkCurrencies_resultStandardScheme getScheme() {
+        return new checkCurrencies_resultStandardScheme();
+      }
+    }
+
+    private static class checkCurrencies_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<checkCurrencies_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, checkCurrencies_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, checkCurrencies_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class checkCurrencies_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public checkCurrencies_resultTupleScheme getScheme() {
+        return new checkCurrencies_resultTupleScheme();
+      }
+    }
+
+    private static class checkCurrencies_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<checkCurrencies_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, checkCurrencies_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, checkCurrencies_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class tellCurrencies_args implements org.apache.thrift.TBase<tellCurrencies_args, tellCurrencies_args._Fields>, java.io.Serializable, Cloneable, Comparable<tellCurrencies_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("tellCurrencies_args");
+
+    private static final org.apache.thrift.protocol.TField T_BANK_FIELD_DESC = new org.apache.thrift.protocol.TField("tBank", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField T_CODES_FIELD_DESC = new org.apache.thrift.protocol.TField("tCodes", org.apache.thrift.protocol.TType.LIST, (short)2);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new tellCurrencies_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new tellCurrencies_argsTupleSchemeFactory();
+
+    public TBank tBank; // required
+    public java.util.List<TCurrencyCode> tCodes; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      T_BANK((short)1, "tBank"),
+      T_CODES((short)2, "tCodes");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // T_BANK
+            return T_BANK;
+          case 2: // T_CODES
+            return T_CODES;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.T_BANK, new org.apache.thrift.meta_data.FieldMetaData("tBank", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TBank.class)));
+      tmpMap.put(_Fields.T_CODES, new org.apache.thrift.meta_data.FieldMetaData("tCodes", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+              new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, TCurrencyCode.class))));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(tellCurrencies_args.class, metaDataMap);
+    }
+
+    public tellCurrencies_args() {
+    }
+
+    public tellCurrencies_args(
+      TBank tBank,
+      java.util.List<TCurrencyCode> tCodes)
+    {
+      this();
+      this.tBank = tBank;
+      this.tCodes = tCodes;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public tellCurrencies_args(tellCurrencies_args other) {
+      if (other.isSetTBank()) {
+        this.tBank = new TBank(other.tBank);
+      }
+      if (other.isSetTCodes()) {
+        java.util.List<TCurrencyCode> __this__tCodes = new java.util.ArrayList<TCurrencyCode>(other.tCodes.size());
+        for (TCurrencyCode other_element : other.tCodes) {
+          __this__tCodes.add(other_element);
+        }
+        this.tCodes = __this__tCodes;
+      }
+    }
+
+    public tellCurrencies_args deepCopy() {
+      return new tellCurrencies_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.tBank = null;
+      this.tCodes = null;
+    }
+
+    public TBank getTBank() {
+      return this.tBank;
+    }
+
+    public tellCurrencies_args setTBank(TBank tBank) {
+      this.tBank = tBank;
+      return this;
+    }
+
+    public void unsetTBank() {
+      this.tBank = null;
+    }
+
+    /** Returns true if field tBank is set (has been assigned a value) and false otherwise */
+    public boolean isSetTBank() {
+      return this.tBank != null;
+    }
+
+    public void setTBankIsSet(boolean value) {
+      if (!value) {
+        this.tBank = null;
+      }
+    }
+
+    public int getTCodesSize() {
+      return (this.tCodes == null) ? 0 : this.tCodes.size();
+    }
+
+    public java.util.Iterator<TCurrencyCode> getTCodesIterator() {
+      return (this.tCodes == null) ? null : this.tCodes.iterator();
+    }
+
+    public void addToTCodes(TCurrencyCode elem) {
+      if (this.tCodes == null) {
+        this.tCodes = new java.util.ArrayList<TCurrencyCode>();
+      }
+      this.tCodes.add(elem);
+    }
+
+    public java.util.List<TCurrencyCode> getTCodes() {
+      return this.tCodes;
+    }
+
+    public tellCurrencies_args setTCodes(java.util.List<TCurrencyCode> tCodes) {
+      this.tCodes = tCodes;
+      return this;
+    }
+
+    public void unsetTCodes() {
+      this.tCodes = null;
+    }
+
+    /** Returns true if field tCodes is set (has been assigned a value) and false otherwise */
+    public boolean isSetTCodes() {
+      return this.tCodes != null;
+    }
+
+    public void setTCodesIsSet(boolean value) {
+      if (!value) {
+        this.tCodes = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, java.lang.Object value) {
+      switch (field) {
+      case T_BANK:
+        if (value == null) {
+          unsetTBank();
+        } else {
+          setTBank((TBank)value);
+        }
+        break;
+
+      case T_CODES:
+        if (value == null) {
+          unsetTCodes();
+        } else {
+          setTCodes((java.util.List<TCurrencyCode>)value);
+        }
+        break;
+
+      }
+    }
+
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case T_BANK:
+        return getTBank();
+
+      case T_CODES:
+        return getTCodes();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case T_BANK:
+        return isSetTBank();
+      case T_CODES:
+        return isSetTCodes();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof tellCurrencies_args)
+        return this.equals((tellCurrencies_args)that);
+      return false;
+    }
+
+    public boolean equals(tellCurrencies_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_tBank = true && this.isSetTBank();
+      boolean that_present_tBank = true && that.isSetTBank();
+      if (this_present_tBank || that_present_tBank) {
+        if (!(this_present_tBank && that_present_tBank))
+          return false;
+        if (!this.tBank.equals(that.tBank))
+          return false;
+      }
+
+      boolean this_present_tCodes = true && this.isSetTCodes();
+      boolean that_present_tCodes = true && that.isSetTCodes();
+      if (this_present_tCodes || that_present_tCodes) {
+        if (!(this_present_tCodes && that_present_tCodes))
+          return false;
+        if (!this.tCodes.equals(that.tCodes))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetTBank()) ? 131071 : 524287);
+      if (isSetTBank())
+        hashCode = hashCode * 8191 + tBank.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetTCodes()) ? 131071 : 524287);
+      if (isSetTCodes())
+        hashCode = hashCode * 8191 + tCodes.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(tellCurrencies_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetTBank()).compareTo(other.isSetTBank());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTBank()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tBank, other.tBank);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetTCodes()).compareTo(other.isSetTCodes());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTCodes()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tCodes, other.tCodes);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("tellCurrencies_args(");
+      boolean first = true;
+
+      sb.append("tBank:");
+      if (this.tBank == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.tBank);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("tCodes:");
+      if (this.tCodes == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.tCodes);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (tBank != null) {
+        tBank.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class tellCurrencies_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public tellCurrencies_argsStandardScheme getScheme() {
+        return new tellCurrencies_argsStandardScheme();
+      }
+    }
+
+    private static class tellCurrencies_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<tellCurrencies_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, tellCurrencies_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // T_BANK
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.tBank = new TBank();
+                struct.tBank.read(iprot);
+                struct.setTBankIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // T_CODES
+              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+                {
+                  org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
+                  struct.tCodes = new java.util.ArrayList<TCurrencyCode>(_list0.size);
+                  TCurrencyCode _elem1;
+                  for (int _i2 = 0; _i2 < _list0.size; ++_i2)
+                  {
+                    _elem1 = pl.edu.agh.sr.middleware.thrift.TCurrencyCode.findByValue(iprot.readI32());
+                    if (_elem1 != null)
+                    {
+                      struct.tCodes.add(_elem1);
+                    }
+                  }
+                  iprot.readListEnd();
+                }
+                struct.setTCodesIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, tellCurrencies_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.tBank != null) {
+          oprot.writeFieldBegin(T_BANK_FIELD_DESC);
+          struct.tBank.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.tCodes != null) {
+          oprot.writeFieldBegin(T_CODES_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, struct.tCodes.size()));
+            for (TCurrencyCode _iter3 : struct.tCodes)
+            {
+              oprot.writeI32(_iter3.getValue());
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class tellCurrencies_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public tellCurrencies_argsTupleScheme getScheme() {
+        return new tellCurrencies_argsTupleScheme();
+      }
+    }
+
+    private static class tellCurrencies_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<tellCurrencies_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, tellCurrencies_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetTBank()) {
+          optionals.set(0);
+        }
+        if (struct.isSetTCodes()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetTBank()) {
+          struct.tBank.write(oprot);
+        }
+        if (struct.isSetTCodes()) {
+          {
+            oprot.writeI32(struct.tCodes.size());
+            for (TCurrencyCode _iter4 : struct.tCodes)
+            {
+              oprot.writeI32(_iter4.getValue());
+            }
+          }
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, tellCurrencies_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.tBank = new TBank();
+          struct.tBank.read(iprot);
+          struct.setTBankIsSet(true);
+        }
+        if (incoming.get(1)) {
+          {
+            org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, iprot.readI32());
+            struct.tCodes = new java.util.ArrayList<TCurrencyCode>(_list5.size);
+            TCurrencyCode _elem6;
+            for (int _i7 = 0; _i7 < _list5.size; ++_i7)
+            {
+              _elem6 = pl.edu.agh.sr.middleware.thrift.TCurrencyCode.findByValue(iprot.readI32());
+              if (_elem6 != null)
+              {
+                struct.tCodes.add(_elem6);
+              }
+            }
+          }
+          struct.setTCodesIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class tellCurrencies_result implements org.apache.thrift.TBase<tellCurrencies_result, tellCurrencies_result._Fields>, java.io.Serializable, Cloneable, Comparable<tellCurrencies_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("tellCurrencies_result");
+
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new tellCurrencies_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new tellCurrencies_resultTupleSchemeFactory();
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(tellCurrencies_result.class, metaDataMap);
+    }
+
+    public tellCurrencies_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public tellCurrencies_result(tellCurrencies_result other) {
+    }
+
+    public tellCurrencies_result deepCopy() {
+      return new tellCurrencies_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, java.lang.Object value) {
+      switch (field) {
+      }
+    }
+
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof tellCurrencies_result)
+        return this.equals((tellCurrencies_result)that);
+      return false;
+    }
+
+    public boolean equals(tellCurrencies_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(tellCurrencies_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("tellCurrencies_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class tellCurrencies_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public tellCurrencies_resultStandardScheme getScheme() {
+        return new tellCurrencies_resultStandardScheme();
+      }
+    }
+
+    private static class tellCurrencies_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<tellCurrencies_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, tellCurrencies_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, tellCurrencies_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class tellCurrencies_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public tellCurrencies_resultTupleScheme getScheme() {
+        return new tellCurrencies_resultTupleScheme();
+      }
+    }
+
+    private static class tellCurrencies_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<tellCurrencies_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, tellCurrencies_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, tellCurrencies_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class requestCredit_args implements org.apache.thrift.TBase<requestCredit_args, requestCredit_args._Fields>, java.io.Serializable, Cloneable, Comparable<requestCredit_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("requestCredit_args");
+
+    private static final org.apache.thrift.protocol.TField T_CREDIT_REQUEST_FIELD_DESC = new org.apache.thrift.protocol.TField("tCreditRequest", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new requestCredit_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new requestCredit_argsTupleSchemeFactory();
+
+    public TCreditRequest tCreditRequest; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      T_CREDIT_REQUEST((short)1, "tCreditRequest");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // T_CREDIT_REQUEST
+            return T_CREDIT_REQUEST;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.T_CREDIT_REQUEST, new org.apache.thrift.meta_data.FieldMetaData("tCreditRequest", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TCreditRequest.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(requestCredit_args.class, metaDataMap);
+    }
+
+    public requestCredit_args() {
+    }
+
+    public requestCredit_args(
+      TCreditRequest tCreditRequest)
+    {
+      this();
+      this.tCreditRequest = tCreditRequest;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public requestCredit_args(requestCredit_args other) {
+      if (other.isSetTCreditRequest()) {
+        this.tCreditRequest = new TCreditRequest(other.tCreditRequest);
+      }
+    }
+
+    public requestCredit_args deepCopy() {
+      return new requestCredit_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.tCreditRequest = null;
+    }
+
+    public TCreditRequest getTCreditRequest() {
+      return this.tCreditRequest;
+    }
+
+    public requestCredit_args setTCreditRequest(TCreditRequest tCreditRequest) {
+      this.tCreditRequest = tCreditRequest;
+      return this;
+    }
+
+    public void unsetTCreditRequest() {
+      this.tCreditRequest = null;
+    }
+
+    /** Returns true if field tCreditRequest is set (has been assigned a value) and false otherwise */
+    public boolean isSetTCreditRequest() {
+      return this.tCreditRequest != null;
+    }
+
+    public void setTCreditRequestIsSet(boolean value) {
+      if (!value) {
+        this.tCreditRequest = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, java.lang.Object value) {
+      switch (field) {
+      case T_CREDIT_REQUEST:
+        if (value == null) {
+          unsetTCreditRequest();
+        } else {
+          setTCreditRequest((TCreditRequest)value);
+        }
+        break;
+
+      }
+    }
+
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case T_CREDIT_REQUEST:
+        return getTCreditRequest();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case T_CREDIT_REQUEST:
+        return isSetTCreditRequest();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof requestCredit_args)
+        return this.equals((requestCredit_args)that);
+      return false;
+    }
+
+    public boolean equals(requestCredit_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_tCreditRequest = true && this.isSetTCreditRequest();
+      boolean that_present_tCreditRequest = true && that.isSetTCreditRequest();
+      if (this_present_tCreditRequest || that_present_tCreditRequest) {
+        if (!(this_present_tCreditRequest && that_present_tCreditRequest))
+          return false;
+        if (!this.tCreditRequest.equals(that.tCreditRequest))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetTCreditRequest()) ? 131071 : 524287);
+      if (isSetTCreditRequest())
+        hashCode = hashCode * 8191 + tCreditRequest.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(requestCredit_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetTCreditRequest()).compareTo(other.isSetTCreditRequest());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTCreditRequest()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tCreditRequest, other.tCreditRequest);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("requestCredit_args(");
+      boolean first = true;
+
+      sb.append("tCreditRequest:");
+      if (this.tCreditRequest == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.tCreditRequest);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (tCreditRequest != null) {
+        tCreditRequest.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class requestCredit_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public requestCredit_argsStandardScheme getScheme() {
+        return new requestCredit_argsStandardScheme();
+      }
+    }
+
+    private static class requestCredit_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<requestCredit_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, requestCredit_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // T_CREDIT_REQUEST
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.tCreditRequest = new TCreditRequest();
+                struct.tCreditRequest.read(iprot);
+                struct.setTCreditRequestIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, requestCredit_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.tCreditRequest != null) {
+          oprot.writeFieldBegin(T_CREDIT_REQUEST_FIELD_DESC);
+          struct.tCreditRequest.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class requestCredit_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public requestCredit_argsTupleScheme getScheme() {
+        return new requestCredit_argsTupleScheme();
+      }
+    }
+
+    private static class requestCredit_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<requestCredit_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, requestCredit_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetTCreditRequest()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetTCreditRequest()) {
+          struct.tCreditRequest.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, requestCredit_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.tCreditRequest = new TCreditRequest();
+          struct.tCreditRequest.read(iprot);
+          struct.setTCreditRequestIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class requestCredit_result implements org.apache.thrift.TBase<requestCredit_result, requestCredit_result._Fields>, java.io.Serializable, Cloneable, Comparable<requestCredit_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("requestCredit_result");
+
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new requestCredit_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new requestCredit_resultTupleSchemeFactory();
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(requestCredit_result.class, metaDataMap);
+    }
+
+    public requestCredit_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public requestCredit_result(requestCredit_result other) {
+    }
+
+    public requestCredit_result deepCopy() {
+      return new requestCredit_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, java.lang.Object value) {
+      switch (field) {
+      }
+    }
+
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof requestCredit_result)
+        return this.equals((requestCredit_result)that);
+      return false;
+    }
+
+    public boolean equals(requestCredit_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(requestCredit_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("requestCredit_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class requestCredit_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public requestCredit_resultStandardScheme getScheme() {
+        return new requestCredit_resultStandardScheme();
+      }
+    }
+
+    private static class requestCredit_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<requestCredit_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, requestCredit_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, requestCredit_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class requestCredit_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public requestCredit_resultTupleScheme getScheme() {
+        return new requestCredit_resultTupleScheme();
+      }
+    }
+
+    private static class requestCredit_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<requestCredit_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, requestCredit_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, requestCredit_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class replyCredit_args implements org.apache.thrift.TBase<replyCredit_args, replyCredit_args._Fields>, java.io.Serializable, Cloneable, Comparable<replyCredit_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("replyCredit_args");
+
+    private static final org.apache.thrift.protocol.TField T_CREDIT_FIELD_DESC = new org.apache.thrift.protocol.TField("tCredit", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new replyCredit_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new replyCredit_argsTupleSchemeFactory();
+
+    public TCredit tCredit; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      T_CREDIT((short)1, "tCredit");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // T_CREDIT
+            return T_CREDIT;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.T_CREDIT, new org.apache.thrift.meta_data.FieldMetaData("tCredit", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TCredit.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(replyCredit_args.class, metaDataMap);
+    }
+
+    public replyCredit_args() {
+    }
+
+    public replyCredit_args(
+      TCredit tCredit)
+    {
+      this();
+      this.tCredit = tCredit;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public replyCredit_args(replyCredit_args other) {
+      if (other.isSetTCredit()) {
+        this.tCredit = new TCredit(other.tCredit);
+      }
+    }
+
+    public replyCredit_args deepCopy() {
+      return new replyCredit_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.tCredit = null;
+    }
+
+    public TCredit getTCredit() {
+      return this.tCredit;
+    }
+
+    public replyCredit_args setTCredit(TCredit tCredit) {
+      this.tCredit = tCredit;
+      return this;
+    }
+
+    public void unsetTCredit() {
+      this.tCredit = null;
+    }
+
+    /** Returns true if field tCredit is set (has been assigned a value) and false otherwise */
+    public boolean isSetTCredit() {
+      return this.tCredit != null;
+    }
+
+    public void setTCreditIsSet(boolean value) {
+      if (!value) {
+        this.tCredit = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, java.lang.Object value) {
+      switch (field) {
+      case T_CREDIT:
+        if (value == null) {
+          unsetTCredit();
+        } else {
+          setTCredit((TCredit)value);
+        }
+        break;
+
+      }
+    }
+
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case T_CREDIT:
+        return getTCredit();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case T_CREDIT:
+        return isSetTCredit();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof replyCredit_args)
+        return this.equals((replyCredit_args)that);
+      return false;
+    }
+
+    public boolean equals(replyCredit_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_tCredit = true && this.isSetTCredit();
+      boolean that_present_tCredit = true && that.isSetTCredit();
+      if (this_present_tCredit || that_present_tCredit) {
+        if (!(this_present_tCredit && that_present_tCredit))
+          return false;
+        if (!this.tCredit.equals(that.tCredit))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetTCredit()) ? 131071 : 524287);
+      if (isSetTCredit())
+        hashCode = hashCode * 8191 + tCredit.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(replyCredit_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetTCredit()).compareTo(other.isSetTCredit());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTCredit()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tCredit, other.tCredit);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("replyCredit_args(");
+      boolean first = true;
+
+      sb.append("tCredit:");
+      if (this.tCredit == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.tCredit);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (tCredit != null) {
+        tCredit.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class replyCredit_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public replyCredit_argsStandardScheme getScheme() {
+        return new replyCredit_argsStandardScheme();
+      }
+    }
+
+    private static class replyCredit_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<replyCredit_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, replyCredit_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // T_CREDIT
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.tCredit = new TCredit();
+                struct.tCredit.read(iprot);
+                struct.setTCreditIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, replyCredit_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.tCredit != null) {
+          oprot.writeFieldBegin(T_CREDIT_FIELD_DESC);
+          struct.tCredit.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class replyCredit_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public replyCredit_argsTupleScheme getScheme() {
+        return new replyCredit_argsTupleScheme();
+      }
+    }
+
+    private static class replyCredit_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<replyCredit_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, replyCredit_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetTCredit()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetTCredit()) {
+          struct.tCredit.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, replyCredit_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.tCredit = new TCredit();
+          struct.tCredit.read(iprot);
+          struct.setTCreditIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class replyCredit_result implements org.apache.thrift.TBase<replyCredit_result, replyCredit_result._Fields>, java.io.Serializable, Cloneable, Comparable<replyCredit_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("replyCredit_result");
+
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new replyCredit_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new replyCredit_resultTupleSchemeFactory();
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(replyCredit_result.class, metaDataMap);
+    }
+
+    public replyCredit_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public replyCredit_result(replyCredit_result other) {
+    }
+
+    public replyCredit_result deepCopy() {
+      return new replyCredit_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, java.lang.Object value) {
+      switch (field) {
+      }
+    }
+
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof replyCredit_result)
+        return this.equals((replyCredit_result)that);
+      return false;
+    }
+
+    public boolean equals(replyCredit_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(replyCredit_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("replyCredit_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class replyCredit_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public replyCredit_resultStandardScheme getScheme() {
+        return new replyCredit_resultStandardScheme();
+      }
+    }
+
+    private static class replyCredit_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<replyCredit_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, replyCredit_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, replyCredit_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class replyCredit_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public replyCredit_resultTupleScheme getScheme() {
+        return new replyCredit_resultTupleScheme();
+      }
+    }
+
+    private static class replyCredit_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<replyCredit_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, replyCredit_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, replyCredit_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
   }
 
 }

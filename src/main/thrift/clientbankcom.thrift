@@ -15,35 +15,6 @@ enum TAccountType {
     PREMIUM = 1
 }
 
-//struct Work {
-//  1: i32 num1 = 0,
-//  2: i32 num2,
-//  3: OperationType op,
-//  4: optional string comment,
-//}
-//
-///**
-// * Structs can also be exceptions, if they are nasty.
-// */
-//exception InvalidOperation {
-//  1: i32 whatOp,
-//  2: string why
-//}
-//
-//exception InvalidArguments {
-//  1: i32 argNo,
-//  2: string reason
-//}
-//
-//
-//
-//exception PermissionViolation {};
-//exception UserDoesNotExist {};
-exception NotSupportedCurrency {
-  1: TCurrencyCode code,
-  2: string reason
-}
-
 struct TClient  {
     1: required string firstName,
     2: required string lastName,
@@ -62,11 +33,21 @@ struct TCheckMessage{
     2: required string balance
 }
 
+struct TCreditRequest{
+    1: required TClient tClient,
+    2: required string currency,
+    3: required i32 money,
+    4: required i32 days
+}
 
-//service Calculator {
-//   i32 add(1:i32 num1, 2:i32 num2),
-//   i32 subtract(1:i32 num1, 2:i32 num2),
-//}
+struct TCredit{
+    1: required TBank tBank,
+    2: required TCurrencyCode tCode,
+    3: required i32 money,
+    4: required double exchangeRate,
+    5: required i32 days,
+    6: required double interest
+}
 
 service TCreateAccount {
     void addAccount(1:TClient tClient),
@@ -80,5 +61,8 @@ service TStandardAccount{
 }
 
 service TPremiumAccount{
-
+    void checkCurrencies(1:TClient tClient),
+    void tellCurrencies(1: TBank tBank, 2:list<TCurrencyCode> tCodes),
+    void requestCredit(1:TCreditRequest tCreditRequest),
+    void replyCredit(1:TCredit tCredit),
 }

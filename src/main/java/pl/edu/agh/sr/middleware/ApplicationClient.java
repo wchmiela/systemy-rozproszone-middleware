@@ -60,6 +60,8 @@ public class ApplicationClient {
     }
 
     private static void menu(Client client) throws IOException {
+        boolean first = true;
+
         System.out.println("================MENU================");
         System.out.println("register               [zaloz konto]");
         System.out.println("check      [sprawdz dostepne srodki]");
@@ -68,6 +70,9 @@ public class ApplicationClient {
         System.out.println("====================================");
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String currency = null;
+        String money = null;
+        String days = null;
 
         while (true) {
             System.out.print("Wczytaj operacje: ");
@@ -81,6 +86,16 @@ public class ApplicationClient {
                     client.check();
                     break;
                 case "credit":
+                    if (first) {
+                        System.out.print("Podaj walute: ");
+                        currency = bufferedReader.readLine().toUpperCase();
+                        System.out.print("Podaj ilosc: ");
+                        money = bufferedReader.readLine();
+                        System.out.print("Podaj ilosc dni: ");
+                        days = bufferedReader.readLine();
+                        first = false;
+                    }
+                    client.credit(currency, money, days);
                     break;
                 case "exit":
 //                    client.close(); todo implement
