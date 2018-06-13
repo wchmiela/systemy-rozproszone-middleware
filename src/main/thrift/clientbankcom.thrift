@@ -10,6 +10,11 @@ enum TCurrencyCode {
     RUB = 6
 }
 
+enum TAccountType {
+    STANDARD = 0,
+    PREMIUM = 1
+}
+
 //struct Work {
 //  1: i32 num1 = 0,
 //  2: i32 num2,
@@ -44,6 +49,12 @@ struct TClient  {
     2: required string lastName,
     3: required string pesel,
     4: required string income
+    5: i32 port;
+}
+
+struct TBank  {
+    1: required string bankName,
+    2: required TAccountType type
 }
 
 
@@ -54,9 +65,11 @@ struct TClient  {
 
 service TCreateAccount {
     void addAccount(1:TClient tClient)
+    void confirm(1:TBank tBank)
 }
 
 service TStandardAccount{
+
 
 }
 

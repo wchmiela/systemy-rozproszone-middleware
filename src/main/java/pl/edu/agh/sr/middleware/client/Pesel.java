@@ -1,4 +1,4 @@
-package pl.edu.agh.sr.middleware;
+package pl.edu.agh.sr.middleware.client;
 
 public class Pesel {
     private byte PESEL[];

@@ -3,6 +3,7 @@ package pl.edu.agh.sr.middleware;
 import pl.edu.agh.sr.middleware.client.Client;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -28,19 +29,19 @@ public class ApplicationClient {
 
         try {
             System.out.print("Podaj swoje Imie: ");
-//            firstName = bufferedReader.readLine();
-            firstName = "wojtek";
+            firstName = bufferedReader.readLine();
+//            firstName = "wojtek";
             System.out.print("Podaj swoje Nazwisko: ");
-//            lastName = bufferedReader.readLine();
-            lastName = "chmie";
+            lastName = bufferedReader.readLine();
+//            lastName = "chmie";
             System.out.print("Podaj swoj PESEL: ");
-//            pesel = bufferedReader.readLine();
-            pesel = "95102148011";
+            pesel = bufferedReader.readLine();
+//            pesel = "95102148011";
             System.out.print("Podaj deklarowany prog miesiecznych wplywow: ");
-//            income = new BigDecimal(bufferedReader.readLine()).setScale(2, RoundingMode.HALF_UP);
-            income = new BigDecimal("1000").setScale(2, RoundingMode.HALF_UP);
-//        } catch (IOException | NumberFormatException e) {
-        } catch (NumberFormatException e) {
+            income = new BigDecimal(bufferedReader.readLine()).setScale(2, RoundingMode.HALF_UP);
+//            income = new BigDecimal("444").setScale(2, RoundingMode.HALF_UP);
+        } catch (IOException | NumberFormatException e) {
+//        } catch (NumberFormatException e) {
             System.out.println("Wystapil blad w pobieraniu danych klienta.");
             System.exit(1);
         }

@@ -8,7 +8,6 @@ import org.apache.thrift.server.TSimpleServer;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
 import org.apache.thrift.transport.TTransportException;
-import pl.edu.agh.sr.middleware.client.Client;
 import pl.edu.agh.sr.middleware.proto.Currency;
 import pl.edu.agh.sr.middleware.proto.CurrencyCode;
 import pl.edu.agh.sr.middleware.proto.grpc.CurrencyServiceGrpc;
@@ -23,22 +22,24 @@ import java.util.stream.Stream;
 
 public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
 
+    private static BigDecimal premiumLimit;
     private static int bankPort;
-    private static List<Client> clients = Lists.newArrayList();
+    private static List<ClientTuple> clients = Lists.newArrayList();
+//    private static List<Integer> clientsPorts;
+    private static String bankName;
     private final int exchangeCurrencyPort;
-    private final String bankName;
-    private final BigDecimal premiumLimit;
     private List<CurrencyCode> supportedCurrencies;
     private List<Currency> currencies = Lists.newCopyOnWriteArrayList();
 
-    public Bank(int inputBankPort, int exchangeCurrencyPort, String bankName, String rawCurrencies, BigDecimal premiumLimit) {
-        if (bankName == null || rawCurrencies == null || premiumLimit == null)
+    public Bank(int inputBankPort, int exchangeCurrencyPort, String inputBankName, String rawCurrencies, BigDecimal inputPremiumLimit) {
+        if (inputBankName == null || rawCurrencies == null || inputPremiumLimit == null)
             throw new IllegalArgumentException();
 
         bankPort = inputBankPort;
+        premiumLimit = inputPremiumLimit;
+//        clientsPorts = inputclientsPorts;
+        bankName = inputBankName;
         this.exchangeCurrencyPort = exchangeCurrencyPort;
-        this.bankName = bankName;
-        this.premiumLimit = premiumLimit;
         this.supportedCurrencies = Lists.newArrayList();
 
         Stream.of(rawCurrencies.split(",")).forEach(this::addCurrency);
@@ -51,10 +52,10 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
     }
 
     public static void handleClient() {
-        TCreateAccount.Processor<ClientHandler> processor = new TCreateAccount.Processor<>(new ClientHandler(clients));
+        TCreateAccount.Processor<ClientHandler> processor = new TCreateAccount.Processor<>(new ClientHandler(clients, bankName, premiumLimit));
 
         try {
-            TServerTransport serverTransport = new TServerSocket(bankPort);
+            TServerTransport serverTransport = new TServerSocket(8001);
             TProtocolFactory protocolFactory = new TBinaryProtocol.Factory();
 
             TServer server = new TSimpleServer(new TServer.Args(serverTransport).protocolFactory(protocolFactory).processor(processor));
