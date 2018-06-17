@@ -1,6 +1,5 @@
 package pl.edu.agh.sr.middleware.client;
 
-import org.apache.thrift.TException;
 import pl.edu.agh.sr.middleware.proto.CurrencyCode;
 import pl.edu.agh.sr.middleware.thrift.*;
 
@@ -9,7 +8,6 @@ import java.util.stream.Collectors;
 
 public class BankHandler implements TCreateAccount.Iface, TStandardAccount.Iface, TPremiumAccount.Iface {
 
-
     private final List<BankTuple> accounts;
 
     public BankHandler(List<BankTuple> accounts) {
@@ -17,7 +15,7 @@ public class BankHandler implements TCreateAccount.Iface, TStandardAccount.Iface
     }
 
     @Override
-    public void confirm(TBank tBank) throws TException {
+    public void confirm(TBank tBank) {
         BankTuple bankTuple = new BankTuple(tBank);
         accounts.add(bankTuple);
 
@@ -25,34 +23,21 @@ public class BankHandler implements TCreateAccount.Iface, TStandardAccount.Iface
     }
 
     @Override
-    public void decline(TBank tBank) throws TException {
+    public void decline(TBank tBank) {
         BankTuple bankTuple = new BankTuple(tBank);
 
         printDeclineMessage(bankTuple);
     }
 
-    private void printDeclineMessage(BankTuple bankTuple) {
-        String message = String.format("Niestety! Posiadasz juz konto w %s. Typ konta: %s", bankTuple.getBankName(), bankTuple.getAccountType());
-
-        System.out.println(message);
-    }
-
-
-    private void printConfirmMessage(BankTuple bankTuple) {
-        String message = String.format("Gratulujemy! Zalozyles konto w %s. Typ konta: %s", bankTuple.getBankName(), bankTuple.getAccountType());
-
-        System.out.println(message);
-    }
-
     @Override
-    public void replyCheck(TCheckMessage tCheckMessage) throws TException {
+    public void replyCheck(TCheckMessage tCheckMessage) {
         String message = String.format("Stan konta w %s: %s", tCheckMessage.getTBank().getBankName(), tCheckMessage.getBalance());
 
         System.out.println(message);
     }
 
     @Override
-    public void tellCurrencies(TBank tbank, List<TCurrencyCode> tcodes) throws TException {
+    public void tellCurrencies(TBank tbank, List<TCurrencyCode> tcodes) {
         List<CurrencyCode> codes = tcodes.stream()
                 .map(tCurrencyCode -> CurrencyCode.forNumber(tCurrencyCode.getValue()))
                 .collect(Collectors.toList());
@@ -63,7 +48,7 @@ public class BankHandler implements TCreateAccount.Iface, TStandardAccount.Iface
     }
 
     @Override
-    public void replyCredit(TCredit tCredit) throws TException {
+    public void replyCredit(TCredit tCredit) {
         String message = String.format("Otrzymano kredyt w wysokosci: %d w walucie %s. Wartosc w %s: %.4f. Okres: %d dni.",
                 tCredit.getMoney(),
                 tCredit.getTCode().name(),
@@ -74,23 +59,35 @@ public class BankHandler implements TCreateAccount.Iface, TStandardAccount.Iface
         System.out.println(message);
     }
 
+    private void printDeclineMessage(BankTuple bankTuple) {
+        String message = String.format("Niestety! Posiadasz juz konto w %s. Typ konta: %s", bankTuple.getBankName(), bankTuple.getAccountType());
+
+        System.out.println(message);
+    }
+
+    private void printConfirmMessage(BankTuple bankTuple) {
+        String message = String.format("Gratulujemy! Zalozyles konto w %s. Typ konta: %s", bankTuple.getBankName(), bankTuple.getAccountType());
+
+        System.out.println(message);
+    }
+
     @Override
-    public void requestCredit(TCreditRequest tCreditRequest) throws TException {
+    public void requestCredit(TCreditRequest tCreditRequest) {
         //should not be implemented
     }
 
     @Override
-    public void requestCheck(TClient tClient) throws TException {
+    public void requestCheck(TClient tClient) {
         //should not be implemented
     }
 
     @Override
-    public void addAccount(TClient tClient) throws TException {
+    public void addAccount(TClient tClient) {
         //should not be implemented
     }
 
     @Override
-    public void checkCurrencies(TClient tClient) throws TException {
+    public void checkCurrencies(TClient tClient) {
         //should not be implemented
     }
 }

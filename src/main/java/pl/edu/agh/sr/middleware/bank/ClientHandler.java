@@ -71,7 +71,6 @@ public class ClientHandler implements TCreateAccount.Iface, TStandardAccount.Ifa
         socket.close();
     }
 
-
     @Override
     public void requestCheck(TClient tClient) throws TException {
 
@@ -91,10 +90,11 @@ public class ClientHandler implements TCreateAccount.Iface, TStandardAccount.Ifa
         Optional<ClientTuple> clientTuple = getClientByPesel(new Pesel(tClient.getPesel()));
         if (clientTuple.isPresent()) {
             TBank tBank = new TBank(bankName, AccountType.toTAccountType(clientTuple.get().getAccountType()));
-            TCheckMessage tCheckMessage = new TCheckMessage(tBank, tClient.getIncome());
+            BigDecimal currentBalance = new BigDecimal(tClient.getIncome()).subtract(clientTuple.get().getCredit());
+            TCheckMessage tCheckMessage = new TCheckMessage(tBank, currentBalance.toPlainString());
             check.replyCheck(tCheckMessage);
 
-            printCheckMessage(new Client(tClient));
+            printCheckMessage(new Client(tClient), currentBalance);
         }
 
         socket.close();
@@ -158,7 +158,9 @@ public class ClientHandler implements TCreateAccount.Iface, TStandardAccount.Ifa
 
             credit.replyCredit(tCredit);
 
-            System.out.println("Udzielam kredytu.");
+            clientTuple.get().addCredit(BigDecimal.valueOf(tCredit.getMoney() * tCredit.getExchangeRate() * tCredit.getInterest()));
+
+            printCreditConfirmation(tCredit, clientTuple.get().getPesel());
         }
 
         socket.close();
@@ -172,6 +174,18 @@ public class ClientHandler implements TCreateAccount.Iface, TStandardAccount.Ifa
         return (double) randomInt / (double) 100;
     }
 
+    private void printCreditConfirmation(TCredit tCredit, Pesel pesel) {
+        String message = String.format("Udzielono kredyt klientowi o numerze PESEL: %s w wysokosci: %d w walucie %s. Wartosc w %s: %.4f. Okres: %d dni.",
+                pesel,
+                tCredit.getMoney(),
+                tCredit.getTCode().name(),
+                TCurrencyCode.PLN.name(),
+                (double) tCredit.getMoney() * tCredit.getExchangeRate() * tCredit.getInterest(),
+                tCredit.getDays());
+
+        System.out.println(message);
+    }
+
     private void printSupportedCurrencies() {
         String message = String.format("Wspierane waluty przez bank %s: %s",
                 bankName, currencies.stream().map(Currency::getCode2).collect(Collectors.toList()));
@@ -179,9 +193,9 @@ public class ClientHandler implements TCreateAccount.Iface, TStandardAccount.Ifa
         System.out.println(message);
     }
 
-    private void printCheckMessage(Client client) {
+    private void printCheckMessage(Client client, BigDecimal currentBalance) {
         String message = String.format("Stan konta klienta o numerze PESEL %s: %s",
-                client.getPESEL(), client.getIncome().toPlainString());
+                client.getPESEL(), currentBalance.toPlainString());
 
         System.out.println(message);
     }
@@ -193,7 +207,6 @@ public class ClientHandler implements TCreateAccount.Iface, TStandardAccount.Ifa
         System.out.println(message);
     }
 
-
     private Optional<ClientTuple> getClientByPesel(Pesel pesel) {
         return clients.stream().filter(clientTuple -> clientTuple.getPesel().equals(pesel)).findFirst();
     }
@@ -203,27 +216,27 @@ public class ClientHandler implements TCreateAccount.Iface, TStandardAccount.Ifa
     }
 
     @Override
-    public void replyCheck(TCheckMessage tCheckMessage) throws TException {
+    public void replyCheck(TCheckMessage tCheckMessage) {
         //should not be implemented
     }
 
     @Override
-    public void confirm(TBank tBank) throws TException {
+    public void confirm(TBank tBank) {
         //should not be implemented
     }
 
     @Override
-    public void decline(TBank tBank) throws TException {
+    public void decline(TBank tBank) {
         //should not be implemented
     }
 
     @Override
-    public void tellCurrencies(TBank tbank, List<TCurrencyCode> tcodes) throws TException {
+    public void tellCurrencies(TBank tbank, List<TCurrencyCode> tcodes) {
         //should not be implemented
     }
 
     @Override
-    public void replyCredit(TCredit tCretit) throws TException {
+    public void replyCredit(TCredit tCretit) {
         //should not be implemented
     }
 }

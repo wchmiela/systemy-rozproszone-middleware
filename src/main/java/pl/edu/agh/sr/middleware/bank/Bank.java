@@ -9,6 +9,7 @@ import org.apache.thrift.server.TSimpleServer;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
 import org.apache.thrift.transport.TTransportException;
+import pl.edu.agh.sr.middleware.commons.CurrencyUtil;
 import pl.edu.agh.sr.middleware.proto.Currency;
 import pl.edu.agh.sr.middleware.proto.CurrencyCode;
 import pl.edu.agh.sr.middleware.proto.grpc.CurrencyServiceGrpc;
@@ -25,10 +26,10 @@ import java.util.stream.Stream;
 
 public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
 
-    private static BigDecimal premiumLimit;
     private static int bankPort;
-    private static List<ClientTuple> clients = Lists.newArrayList();
     private static String bankName;
+    private static BigDecimal premiumLimit;
+    private static List<ClientTuple> clients = Lists.newArrayList();
     private static List<Currency> currencies = Lists.newCopyOnWriteArrayList();
     private final int exchangeCurrencyPort;
     private List<CurrencyCode> supportedCurrencies;
@@ -39,12 +40,12 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
 
         bankPort = inputBankPort;
         premiumLimit = inputPremiumLimit;
-//        clientsPorts = inputclientsPorts;
         bankName = inputBankName;
         this.exchangeCurrencyPort = exchangeCurrencyPort;
         this.supportedCurrencies = Lists.newArrayList();
 
-        Stream.of(rawCurrencies.split(",")).forEach(this::addCurrency);
+        Stream.of(rawCurrencies.split(","))
+                .forEach(currency -> CurrencyUtil.addCurrency(supportedCurrencies, currency));
 
         BankService bankService = new BankService(this);
 
@@ -59,7 +60,7 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
         TPremiumAccount.Processor<ClientHandler> processor3 = new TPremiumAccount.Processor<>(new ClientHandler(clients, currencies, bankName, premiumLimit));
 
         try {
-            TServerTransport serverTransport = new TServerSocket(8001);
+            TServerTransport serverTransport = new TServerSocket(bankPort);
             TProtocolFactory protocolFactory = new TBinaryProtocol.Factory();
 
             TMultiplexedProcessor multiplex = new TMultiplexedProcessor();
@@ -74,53 +75,6 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
         }
     }
 
-    public static int getBankPort() {
-        return bankPort;
-    }
-
-    public int getExchangeCurrencyPort() {
-        return exchangeCurrencyPort;
-    }
-
-    public List<CurrencyCode> getSupportedCurrencies() {
-        return supportedCurrencies;
-    }
-
-    public List<Currency> getCurrencies() {
-        return currencies;
-    }
-
-    private void addCurrency(String currencyCode) {
-        String upperCaseCurrencyCode = currencyCode.toUpperCase();
-        switch (upperCaseCurrencyCode) {
-            case "USD":
-                this.supportedCurrencies.add(CurrencyCode.USD);
-                break;
-            case "EUR":
-                this.supportedCurrencies.add(CurrencyCode.EUR);
-                break;
-            case "CHF":
-                this.supportedCurrencies.add(CurrencyCode.CHF);
-                break;
-            case "GBP":
-                this.supportedCurrencies.add(CurrencyCode.GBP);
-                break;
-            case "PLN":
-                this.supportedCurrencies.add(CurrencyCode.PLN);
-                break;
-            case "SEK":
-                this.supportedCurrencies.add(CurrencyCode.SEK);
-                break;
-            case "RUB":
-                this.supportedCurrencies.add(CurrencyCode.RUB);
-                break;
-        }
-    }
-
-    private Optional<Currency> getCurrency(CurrencyCode code) {
-        return currencies.stream().filter(currency -> currency.getCode2().equals(code)).findFirst();
-    }
-
     public void updateCurrency(Currency currency) {
         CurrencyCode code = currency.getCode2();
 
@@ -128,6 +82,18 @@ public class Bank extends CurrencyServiceGrpc.CurrencyServiceImplBase {
         currencyToRemove.ifPresent(currencies::remove);
 
         currencies.add(currency);
+    }
+
+    private Optional<Currency> getCurrency(CurrencyCode code) {
+        return currencies.stream().filter(currency -> currency.getCode2().equals(code)).findFirst();
+    }
+
+    public List<CurrencyCode> getSupportedCurrencies() {
+        return supportedCurrencies;
+    }
+
+    public int getExchangeCurrencyPort() {
+        return exchangeCurrencyPort;
     }
 
     @Override

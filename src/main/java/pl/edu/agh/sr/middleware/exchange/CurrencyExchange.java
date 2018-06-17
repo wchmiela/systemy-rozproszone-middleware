@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import pl.edu.agh.sr.middleware.commons.CurrencyUtil;
 import pl.edu.agh.sr.middleware.proto.Currency;
 import pl.edu.agh.sr.middleware.proto.CurrencyCode;
 
@@ -34,7 +35,8 @@ public class CurrencyExchange {
                 .add(Currency.newBuilder().setCode1(CurrencyCode.PLN).setCode2(CurrencyCode.RUB).setValue(0.05).build())
                 .build();
 
-        Stream.of(rawCurrencies.split(",")).forEach(this::addCurrency);
+        Stream.of(rawCurrencies.split(","))
+                .forEach(currency -> CurrencyUtil.addCurrency(supportedCurrencies, currency));
 
         for (Currency baseCurrency : baseCurrencies) {
             if (supportedCurrencies.contains(baseCurrency.getCode2())) {
@@ -55,33 +57,6 @@ public class CurrencyExchange {
 
     public List<Currency> getCurrencies() {
         return currencies;
-    }
-
-    private void addCurrency(String currencyCode) {
-        String upperCaseCurrencyCode = currencyCode.toUpperCase();
-        switch (upperCaseCurrencyCode) {
-            case "USD":
-                this.supportedCurrencies.add(CurrencyCode.USD);
-                break;
-            case "EUR":
-                this.supportedCurrencies.add(CurrencyCode.EUR);
-                break;
-            case "CHF":
-                this.supportedCurrencies.add(CurrencyCode.CHF);
-                break;
-            case "GBP":
-                this.supportedCurrencies.add(CurrencyCode.GBP);
-                break;
-            case "PLN":
-                this.supportedCurrencies.add(CurrencyCode.PLN);
-                break;
-            case "SEK":
-                this.supportedCurrencies.add(CurrencyCode.SEK);
-                break;
-            case "RUB":
-                this.supportedCurrencies.add(CurrencyCode.RUB);
-                break;
-        }
     }
 
     @Override

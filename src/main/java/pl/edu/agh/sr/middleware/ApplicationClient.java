@@ -30,18 +30,13 @@ public class ApplicationClient {
         try {
             System.out.print("Podaj swoje Imie: ");
             firstName = bufferedReader.readLine();
-//            firstName = "wojtek";
             System.out.print("Podaj swoje Nazwisko: ");
             lastName = bufferedReader.readLine();
-//            lastName = "chmie";
             System.out.print("Podaj swoj PESEL: ");
             pesel = bufferedReader.readLine();
-//            pesel = "95102148011";
             System.out.print("Podaj deklarowany prog miesiecznych wplywow: ");
             income = new BigDecimal(bufferedReader.readLine()).setScale(2, RoundingMode.HALF_UP);
-//            income = new BigDecimal("444").setScale(2, RoundingMode.HALF_UP);
         } catch (IOException | NumberFormatException e) {
-//        } catch (NumberFormatException e) {
             System.out.println("Wystapil blad w pobieraniu danych klienta.");
             System.exit(1);
         }
@@ -53,6 +48,8 @@ public class ApplicationClient {
             System.out.println("===KONFIGURACJA KLIENTA STOP===");
 
             menu(client);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Podano niepoprawny numer PESEL");
         } catch (Exception e) {
             System.out.println("Wystapil blad w konfigracji klienta.");
             System.exit(1);

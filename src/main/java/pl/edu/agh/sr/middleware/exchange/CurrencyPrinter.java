@@ -37,16 +37,6 @@ public class CurrencyPrinter implements Runnable {
         System.out.println("=====================================");
     }
 
-    private String getTime() {
-        LocalDateTime localtDateAndTime = LocalDateTime.now();
-        ZoneId zoneId = ZoneId.of("Europe/Warsaw");
-        ZonedDateTime dateAndTimeInLA = ZonedDateTime.of(localtDateAndTime, zoneId);
-        return String.format("%s:%s:%s",
-                dummyFrontZeroAdder(dateAndTimeInLA.getHour()),
-                dummyFrontZeroAdder(dateAndTimeInLA.getMinute()),
-                dummyFrontZeroAdder(dateAndTimeInLA.getSecond()));
-    }
-
     private void printCurrency(Currency currency) {
         String line = String.format("%s/%s %.4f", currency.getCode1(), currency.getCode2(), currency.getValue());
         System.out.println(line);
@@ -58,5 +48,15 @@ public class CurrencyPrinter implements Runnable {
         } else {
             return String.valueOf(number);
         }
+    }
+
+    private String getTime() {
+        LocalDateTime localtDateAndTime = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.of("Europe/Warsaw");
+        ZonedDateTime dateAndTimeInLA = ZonedDateTime.of(localtDateAndTime, zoneId);
+        return String.format("%s:%s:%s",
+                dummyFrontZeroAdder(dateAndTimeInLA.getHour()),
+                dummyFrontZeroAdder(dateAndTimeInLA.getMinute()),
+                dummyFrontZeroAdder(dateAndTimeInLA.getSecond()));
     }
 }

@@ -21,20 +21,20 @@ import java.util.concurrent.Executors;
 public class Client {
 
     private static int bankPort;
+    private static int clientPort;
     private static List<BankTuple> accounts = Lists.newArrayList();
-    private final int clientPort;
     private final String firstName;
     private final String lastName;
     private final Pesel PESEL;
     private final BigDecimal income;
     private boolean first = true;
 
-    public Client(int clientPort, int inputBankPort, String firstName, String lastName, String pesel, BigDecimal income) {
+    public Client(int inputClientPort, int inputBankPort, String firstName, String lastName, String pesel, BigDecimal income) {
         if (firstName == null || lastName == null || pesel == null || income == null)
             throw new IllegalArgumentException();
 
         bankPort = inputBankPort;
-        this.clientPort = clientPort;
+        clientPort = inputClientPort;
         this.firstName = firstName;
         this.lastName = lastName;
         this.PESEL = new Pesel(pesel);
@@ -42,17 +42,6 @@ public class Client {
 
         ExecutorService executorService = Executors.newCachedThreadPool();
         executorService.submit(Client::handleBank);
-
-        ClientService clientService = new ClientService();
-        executorService.submit(clientService);
-    }
-
-    public Client(int clientPort, String firstName, String lastName, Pesel PESEL, BigDecimal income) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.PESEL = PESEL;
-        this.income = income;
-        this.clientPort = clientPort;
     }
 
     public Client(TClient tClient) {
@@ -60,7 +49,6 @@ public class Client {
         this.lastName = tClient.lastName;
         this.PESEL = new Pesel(tClient.pesel);
         this.income = new BigDecimal(tClient.income);
-        this.clientPort = tClient.port;
     }
 
     public static void handleBank() {
@@ -69,7 +57,7 @@ public class Client {
         TPremiumAccount.Processor<BankHandler> processor3 = new TPremiumAccount.Processor<>(new BankHandler(accounts));
 
         try {
-            TServerTransport serverTransport = new TServerSocket(9001);
+            TServerTransport serverTransport = new TServerSocket(clientPort);
             TProtocolFactory protocolFactory = new TBinaryProtocol.Factory();
 
             TMultiplexedProcessor multiplex = new TMultiplexedProcessor();
@@ -106,10 +94,6 @@ public class Client {
         } catch (TException e) {
             e.printStackTrace();
         }
-    }
-
-    public Pesel getPESEL() {
-        return PESEL;
     }
 
     private void clientAction(String... operations) throws TException {
@@ -153,6 +137,10 @@ public class Client {
         }
 
         socket.close();
+    }
+
+    public Pesel getPESEL() {
+        return PESEL;
     }
 
     public BigDecimal getIncome() {
